@@ -1,7 +1,7 @@
 import os
 import tkinter as tk
 from tkinter import ttk, messagebox
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk,  ImageDraw, ImageFont
 
 # ============================================================
 # INTEGRÇÃO COM BANCO DE DADOS (FALLBACK DE SEGURANÇA)
@@ -92,7 +92,7 @@ def atualizar_painel_direito():
         )
         btn_sair.pack(fill="x", padx=15, pady=5)
     else:
-        lbl_msg = tk.Label(painel_direito, text="Olá!\nFaça seu cadastro para\nter uma experiência ainda\nmais especial!", font=("Arial", 9), fg=CINZA, bg="#21103D", justify="center")
+        lbl_msg = tk.Label(painel_direito, text="Olá!\nFaça seu cadastro para\nter uma experiência ainda\nmais ESPECIAL!🎁", font=("Arial", 9), fg=CINZA, bg="#21103D", justify="center")
         lbl_msg.pack(pady=5)
 
         btn_login = tk.Button(
@@ -134,7 +134,7 @@ def deslogar_cliente():
     global cliente_logado
     cliente_logado = None
     atualizar_painel_direito()
-    messagebox.showinfo("Açaízon", "Você saiu da sua conta.")
+    messagebox.showinfo("Açaízon🍇", "Você saiu da sua conta.")
 
 # ============================================================
 # MODAIS DE AUTENTICAÇÃO E CADASTRO
@@ -201,10 +201,10 @@ def abrir_modal_cadastro():
 def mostrar_inicio():
     limpar_conteudo()
 
-    titulo = tk.Label(area_conteudo, text="Bem-vindo ao Açaízon!", font=("Arial", 24, "bold"), fg=BRANCO, bg=ROXO_ESCURO)
+    titulo = tk.Label(area_conteudo, text="Bem-vindo ao Açaízon!", font=("Arial", 16, "bold"), fg=BRANCO, bg=ROXO_ESCURO)
     titulo.pack(pady=(35, 10))
 
-    subtitulo = tk.Label(area_conteudo, text="Mais que açaí, uma energia pra você!", font=("Arial", 12), fg=CINZA, bg=ROXO_ESCURO)
+    subtitulo = tk.Label(area_conteudo, text="Sabor que combina com Você!", font=("Arial", 25), fg=AMARELO, bg=ROXO_ESCURO)
     subtitulo.pack()
 
     caixa = tk.Frame(area_conteudo, bg="#21103D", highlightbackground=ROXO_MEDIO, highlightthickness=1)
@@ -240,7 +240,7 @@ def mostrar_cardapio():
     except Exception as e:
         print(f"Aviso Imagem: {e}")
 
-    tk.Label(area_conteudo, text="🥣 Cardápio", font=("Arial", 24, "bold"), fg=BRANCO, bg=ROXO_ESCURO).pack(pady=5)
+    tk.Label(area_conteudo, text="Sabor em cada escolha - Segue Nosso Cardápio!", font=("Arial", 20, "bold"), fg=VERDE, bg=ROXO_ESCURO).pack(pady=20)
 
     # Abas Interativas no Cardápio
     aba_parent = ttk.Notebook(area_conteudo)
@@ -252,12 +252,12 @@ def mostrar_cardapio():
 
     tk.Label(tab_custom, text="Escolha o Tamanho:", font=("Arial", 11, "bold"), fg=AMARELO, bg="#21103D").pack(anchor="w", padx=20, pady=(10, 2))
     var_tamanho = tk.StringVar(value="300ml - R$ 15,00")
-    tamanhos = [("300ml - R$ 15,00", 15.0), ("500ml - R$ 20,00", 20.0), ("700ml - R$ 25,00", 25.0)]
+    tamanhos = [("300ml - R$ 15,00", 15.0), ("500ml - R$ 24,00", 24.0), ("700ml - R$ 35,00",35.0)]
     for text, price in tamanhos:
         tk.Radiobutton(tab_custom, text=text, variable=var_tamanho, value=text, bg="#21103D", fg=BRANCO, selectcolor=ROXO_MEDIO, activebackground="#21103D").pack(anchor="w", padx=35)
 
     tk.Label(tab_custom, text="Acompanhamentos (2 Grátis / Extras +R$ 3,00):", font=("Arial", 11, "bold"), fg=AMARELO, bg="#21103D").pack(anchor="w", padx=20, pady=(10, 2))
-    opts_acomp = ["Granola", "Leite em Pó", "Leite Condensado", "Banana", "Morango", "Paçoca"]
+    opts_acomp = ["Granola", "Leite em Pó", "Leite Condensado", "Banana", "Morango", "Paçoca", "Nutella", "Ovomaltine", "M&M's", "Chantilly"]
     vars_acomp = {}
     for opt in opts_acomp:
         var = tk.BooleanVar()
@@ -280,8 +280,11 @@ def mostrar_cardapio():
 
     # 2. CATEGORIAS PRONTAS
     categorias = {
-        "🥤 Tradicional": [("Açaí Tradicional 300ml", 15.00), ("Açaí Tigelão da Casa", 20.00)],
-        "🌟 Especialidades": [("Açaí com Morango & Leite em Pó 500ml", 22.00), ("Açaízon Power 1 Litro", 35.00)]
+        "🥤 Tradicional": [("Açaí Tradicional 300ml", 15.90), ("Açaí Tigelão da Casa (Especial)", 30.90), ("Açaí Fitness 300ml", 29.90),("Açaí Power 500ml", 22.90)],
+        "🍫 Especiais": [("Açaí Nutella 500ml", 28.00), ("Açaí Ovomaltine 500ml", 27.00)],
+        "🍓 Frutas": [("Açaí Morango 500ml", 26.50), ("Açaí Banana 500ml", 25.00)],
+        "🍪 Sobremesas": [("Açaí Paçoca 500ml", 27.00), ("Açaí M&M's 500ml", 29.00)],
+        
     }
 
     for cat_nome, itens in categorias.items():
@@ -302,15 +305,589 @@ def mostrar_cardapio():
 
 def mostrar_delirio_roxo():
     limpar_conteudo()
+def mostrar_delirio_roxo():
+    limpar_conteudo()
 
-    titulo = tk.Label(area_conteudo, text="💜 Delírio Roxo", font=("Arial", 24, "bold"), fg=BRANCO, bg=ROXO_ESCURO)
-    titulo.pack(pady=(30, 10))
+    # ========================================================
+    # TELA DE FIDELIDADE - DELÍRIO ROXO
+    # ========================================================
 
-    subtitulo = tk.Label(area_conteudo, text="Seu espaço de fidelidade no Açaízon!", font=("Arial", 12), fg=CINZA, bg=ROXO_ESCURO)
-    subtitulo.pack()
+    # Container principal
+    fidelidade = tk.Frame(
+        area_conteudo,
+        bg=ROXO_ESCURO
+    )
+    fidelidade.pack(
+        fill="both",
+        expand=True,
+        padx=5,
+        pady=5
+    )
 
-    caixa = tk.Frame(area_conteudo, bg="#21103D", highlightbackground=ROXO_MEDIO, highlightthickness=1)
-    caixa.pack(fill="both", expand=True, padx=50, pady=30)
+    # ========================================================
+    # CABEÇALHO DO CLIENTE
+    # ========================================================
+
+    topo_cliente = tk.Frame(
+        fidelidade,
+        bg="#21103D",
+        highlightbackground=ROXO_MEDIO,
+        highlightthickness=1
+    )
+    topo_cliente.pack(
+        fill="x",
+        padx=5,
+        pady=(5, 8)
+    )
+
+    # Ícone circular
+    circulo = tk.Frame(
+        topo_cliente,
+        bg="#3A075C",
+        width=58,
+        height=58,
+        highlightbackground=ROSA,
+        highlightthickness=2
+    )
+    circulo.pack(
+        side="left",
+        padx=12,
+        pady=10
+    )
+    circulo.pack_propagate(False)
+
+    tk.Label(
+        circulo,
+        text="♙",
+        font=("Arial", 30, "bold"),
+        fg=ROSA_CLARO,
+        bg="#3A075C"
+    ).place(
+        relx=0.5,
+        rely=0.5,
+        anchor="center"
+    )
+
+    # Nome
+    nome_cliente = (
+        cliente_logado.get("nome", "Yasmin")
+        if cliente_logado
+        else "Cliente"
+    )
+
+    bloco_nome = tk.Frame(
+        topo_cliente,
+        bg="#21103D"
+    )
+    bloco_nome.pack(
+        side="left",
+        pady=8
+    )
+
+    tk.Label(
+        bloco_nome,
+        text=f"Olá, {nome_cliente}! ♡",
+        font=("Arial", 15, "bold"),
+        fg=BRANCO,
+        bg="#21103D"
+    ).pack(anchor="w")
+
+    tk.Label(
+        bloco_nome,
+        text="Cliente Açaízon • Delírio Roxo",
+        font=("Arial", 8),
+        fg=CINZA,
+        bg="#21103D"
+    ).pack(anchor="w")
+
+    # Frase do lado direito
+    tk.Label(
+        topo_cliente,
+        text="Você faz parte\n"
+             "dessa energia! 💜",
+        font=("Arial", 9, "italic"),
+        fg=AMARELO,
+        bg="#21103D",
+        justify="right"
+    ).pack(
+        side="right",
+        padx=15
+    )
+
+    # ========================================================
+    # ÁREA DOS PONTOS
+    # ========================================================
+
+    pontos_atual = (
+        cliente_logado.get("pontos", 70)
+        if cliente_logado
+        else 70
+    )
+
+    # Limite visual do próximo benefício
+    meta_pontos = 100
+
+    progresso = min(
+        pontos_atual / meta_pontos,
+        1
+    )
+
+    bloco_pontos = tk.Frame(
+        fidelidade,
+        bg="#21103D",
+        highlightbackground=ROXO_MEDIO,
+        highlightthickness=1
+    )
+    bloco_pontos.pack(
+        fill="x",
+        padx=5,
+        pady=(0, 8)
+    )
+
+    # Parte esquerda
+    lado_pontos = tk.Frame(
+        bloco_pontos,
+        bg="#21103D"
+    )
+    lado_pontos.pack(
+        side="left",
+        padx=15,
+        pady=10
+    )
+
+    tk.Label(
+        lado_pontos,
+        text="👑",
+        font=("Arial", 23),
+        fg=AMARELO,
+        bg="#21103D"
+    ).pack(side="left", padx=(0, 8))
+
+    texto_pontos = tk.Frame(
+        lado_pontos,
+        bg="#21103D"
+    )
+    texto_pontos.pack(side="left")
+
+    tk.Label(
+        texto_pontos,
+        text="Seus pontos Delírio Roxo",
+        font=("Arial", 8, "bold"),
+        fg=BRANCO,
+        bg="#21103D"
+    ).pack(anchor="w")
+
+    tk.Label(
+        texto_pontos,
+        text=str(pontos_atual),
+        font=("Arial", 23, "bold"),
+        fg=BRANCO,
+        bg="#21103D"
+    ).pack(side="left")
+
+    tk.Label(
+        texto_pontos,
+        text=" pontos",
+        font=("Arial", 9, "bold"),
+        fg=AMARELO,
+        bg="#21103D"
+    ).pack(
+        side="left",
+        pady=(10, 0)
+    )
+
+    # Barra de progresso
+    progresso_frame = tk.Frame(
+        bloco_pontos,
+        bg="#21103D"
+    )
+    progresso_frame.pack(
+        side="left",
+        fill="x",
+        expand=True,
+        padx=20,
+        pady=12
+    )
+
+    tk.Label(
+        progresso_frame,
+        text=f"Faltam {max(0, meta_pontos - pontos_atual)} pontos para seu próximo benefício!",
+        font=("Arial", 8),
+        fg=CINZA,
+        bg="#21103D"
+    ).pack(anchor="w")
+
+    barra_fundo = tk.Frame(
+        progresso_frame,
+        bg="#32134F",
+        height=9
+    )
+    barra_fundo.pack(
+        fill="x",
+        pady=(5, 2)
+    )
+    barra_fundo.pack_propagate(False)
+
+    largura_barra = max(
+        5,
+        int(100 * progresso)
+    )
+
+    barra = tk.Frame(
+        barra_fundo,
+        bg=ROSA,
+        width=largura_barra,
+        height=9
+    )
+    barra.pack(
+        side="left",
+        fill="y"
+    )
+
+    tk.Label(
+        progresso_frame,
+        text=f"{pontos_atual}/{meta_pontos}",
+        font=("Arial", 7),
+        fg=BRANCO,
+        bg="#21103D"
+    ).pack(anchor="e")
+
+    # ========================================================
+    # BOTÕES DE FIDELIDADE
+    # ========================================================
+
+    atalhos = tk.Frame(
+        fidelidade,
+        bg=ROXO_ESCURO
+    )
+    atalhos.pack(
+        fill="x",
+        padx=5,
+        pady=(0, 8)
+    )
+
+    def criar_atalho(parent, icone, titulo, descricao, comando=None):
+        card = tk.Frame(
+            parent,
+            bg="#21103D",
+            highlightbackground=ROXO_MEDIO,
+            highlightthickness=1,
+            width=110,
+            height=75
+        )
+        card.pack(
+            side="left",
+            fill="both",
+            expand=True,
+            padx=3
+        )
+        card.pack_propagate(False)
+
+        botao = tk.Button(
+            card,
+            text=icone,
+            font=("Arial", 20),
+            fg=ROSA_CLARO,
+            bg="#21103D",
+            activebackground="#32134F",
+            activeforeground=ROSA_CLARO,
+            relief="flat",
+            borderwidth=0,
+            cursor="hand2",
+            command=comando if comando else lambda: None
+        )
+        botao.pack(pady=(5, 0))
+
+        tk.Label(
+            card,
+            text=titulo,
+            font=("Arial", 8, "bold"),
+            fg=BRANCO,
+            bg="#21103D"
+        ).pack()
+
+        tk.Label(
+            card,
+            text=descricao,
+            font=("Arial", 6),
+            fg=CINZA,
+            bg="#21103D"
+        ).pack()
+
+    criar_atalho(
+        atalhos,
+        "🎁",
+        "Meus Pedidos",
+        "Confira seus pedidos"
+    )
+
+    criar_atalho(
+        atalhos,
+        "☆",
+        "Meus Pontos",
+        "Acompanhe seus pontos"
+    )
+
+    criar_atalho(
+        atalhos,
+        "♡",
+        "Meus Favoritos",
+        "Seus sabores favoritos"
+    )
+
+    def abrir_cupom():
+        messagebox.showinfo(
+            "Cupons",
+            "Seus cupons e benefícios aparecerão aqui."
+        )
+
+    criar_atalho(
+        atalhos,
+        "🎟",
+        "Cupons",
+        "Veja seus cupons",
+        abrir_cupom
+    )
+
+    # ========================================================
+    # PARTE INFERIOR
+    # ========================================================
+
+    inferior = tk.Frame(
+        fidelidade,
+        bg=ROXO_ESCURO
+    )
+    inferior.pack(
+        fill="both",
+        expand=True,
+        padx=5
+    )
+
+    # ========================================================
+    # ÚLTIMOS PEDIDOS
+    # ========================================================
+
+    pedidos = tk.Frame(
+        inferior,
+        bg="#21103D",
+        highlightbackground=ROXO_MEDIO,
+        highlightthickness=1
+    )
+    pedidos.pack(
+        fill="both",
+        expand=True,
+        padx=(0, 4)
+    )
+
+    cab_pedidos = tk.Frame(
+        pedidos,
+        bg="#21103D"
+    )
+    cab_pedidos.pack(
+        fill="x",
+        padx=12,
+        pady=(8, 5)
+    )
+
+    tk.Label(
+        cab_pedidos,
+        text="◷  Últimos pedidos",
+        font=("Arial", 9, "bold"),
+        fg=BRANCO,
+        bg="#21103D"
+    ).pack(side="left")
+
+    tk.Label(
+        cab_pedidos,
+        text="Ver todos  ›",
+        font=("Arial", 7, "bold"),
+        fg=CINZA,
+        bg="#21103D",
+        cursor="hand2"
+    ).pack(side="right")
+
+    # Pedidos demonstrativos / últimos pedidos disponíveis
+    pedidos_lista = [
+        ("🍇", "Açaí Tradicional", "08/07/2025 • 14:32", "R$ 14,90"),
+        ("🍓", "Açaí Especial", "05/07/2025 • 16:20", "R$ 17,90"),
+        ("💜", "Açaí Power", "02/07/2025 • 12:15", "R$ 20,90")
+    ]
+
+    for icone_pedido, nome_pedido, data_pedido, valor_pedido in pedidos_lista:
+
+        linha = tk.Frame(
+            pedidos,
+            bg="#261044"
+        )
+        linha.pack(
+            fill="x",
+            padx=8,
+            pady=3
+        )
+
+        tk.Label(
+            linha,
+            text=icone_pedido,
+            font=("Arial", 18),
+            fg=BRANCO,
+            bg="#261044"
+        ).pack(
+            side="left",
+            padx=(5, 8)
+        )
+
+        info = tk.Frame(
+            linha,
+            bg="#261044"
+        )
+        info.pack(
+            side="left",
+            fill="x",
+            expand=True
+        )
+
+        tk.Label(
+            info,
+            text=nome_pedido,
+            font=("Arial", 8, "bold"),
+            fg=BRANCO,
+            bg="#261044"
+        ).pack(anchor="w")
+
+        tk.Label(
+            info,
+            text=data_pedido,
+            font=("Arial", 6),
+            fg=CINZA,
+            bg="#261044"
+        ).pack(anchor="w")
+
+        tk.Label(
+            linha,
+            text="Entregue",
+            font=("Arial", 6, "bold"),
+            fg=BRANCO,
+            bg=ROXO_MEDIO
+        ).pack(
+            side="left",
+            padx=8
+        )
+
+        tk.Label(
+            linha,
+            text=valor_pedido,
+            font=("Arial", 8, "bold"),
+            fg=BRANCO,
+            bg="#261044"
+        ).pack(
+            side="left",
+            padx=5
+        )
+
+        tk.Label(
+            linha,
+            text="›",
+            font=("Arial", 14),
+            fg=ROSA_CLARO,
+            bg="#261044"
+        ).pack(
+            side="right",
+            padx=5
+        )
+
+    # ========================================================
+    # BENEFÍCIO DELÍRIO ROXO
+    # ========================================================
+
+    beneficio = tk.Frame(
+        inferior,
+        bg="#21103D",
+        highlightbackground=ROXO_MEDIO,
+        highlightthickness=1,
+        width=180
+    )
+    beneficio.pack(
+        side="right",
+        fill="y",
+        padx=(4, 0)
+    )
+    beneficio.pack_propagate(False)
+
+    tk.Label(
+        beneficio,
+        text="💜",
+        font=("Arial", 27),
+        fg=ROSA_CLARO,
+        bg="#21103D"
+    ).pack(pady=(12, 3))
+
+    tk.Label(
+        beneficio,
+        text="Seu próximo\nbenefício",
+        font=("Arial", 10, "bold"),
+        fg=BRANCO,
+        bg="#21103D",
+        justify="center"
+    ).pack()
+
+    tk.Label(
+        beneficio,
+        text="Açaí tradicional\nGRÁTIS",
+        font=("Arial", 11, "bold"),
+        fg=AMARELO,
+        bg="#21103D",
+        justify="center"
+    ).pack(pady=8)
+
+    tk.Label(
+        beneficio,
+        text="Ao completar\n100 pontos",
+        font=("Arial", 8),
+        fg=CINZA,
+        bg="#21103D",
+        justify="center"
+    ).pack()
+
+    def resgatar():
+        if pontos_atual < meta_pontos:
+            faltam = meta_pontos - pontos_atual
+            messagebox.showinfo(
+                "Delírio Roxo",
+                f"Você ainda precisa de {faltam} pontos "
+                f"para liberar seu benefício! 💜"
+            )
+        else:
+            messagebox.showinfo(
+                "Delírio Roxo",
+                "Parabéns! Seu benefício está disponível! 🎁"
+            )
+
+    tk.Button(
+        beneficio,
+        text="Ver benefício",
+        font=("Arial", 8, "bold"),
+        bg=ROSA,
+        fg=BRANCO,
+        activebackground=ROSA_CLARO,
+        activeforeground=BRANCO,
+        relief="flat",
+        cursor="hand2",
+        command=resgatar
+    ).pack(
+        fill="x",
+        padx=12,
+        pady=12
+    )
+    
+    
+    # titulo = tk.Label(area_conteudo, text="💕 Delírio Roxo💕", font=("Arial", 24, "bold"), fg=BRANCO, bg=ROXO_ESCURO)
+    # titulo.pack(pady=(30, 10))
+
+    # subtitulo = tk.Label(area_conteudo, text="Seu espaço de fidelidade no Açaízon!", font=("Arial", 12), fg=CINZA, bg=ROXO_ESCURO)
+    # subtitulo.pack()
+
+    # caixa = tk.Frame(area_conteudo, bg="#21103D", highlightbackground=ROXO_MEDIO, highlightthickness=1)
+    # caixa.pack(fill="both", expand=True, padx=50, pady=30)
 
     pontos_atual = cliente_logado.get("pontos", 120) if cliente_logado else 120
 
@@ -421,11 +998,92 @@ logo.pack(side="left", padx=35)
 frase = tk.Label(cabecalho, text="Mais que Açaí,\né energia pra você! ♡", font=("Arial", 10, "italic"), fg=BRANCO, bg="#3A075C", justify="left")
 frase.pack(side="left", padx=20)
 
-logo_central = tk.Label(cabecalho, text="🍇\nAçaízon", font=("Arial", 15, "bold"), fg=BRANCO, bg="#3A075C")
-logo_central.place(relx=0.50, rely=0.50, anchor="center")
 
-qualidade = tk.Label(cabecalho, text="Sabor de\nQualidade e Energia! ✨", font=("Arial", 11, "bold"), fg=BRANCO, bg="#3A075C", justify="center")
-qualidade.pack(side="right", padx=40)
+# ============================================================
+# LOGO CENTRAL DO CABEÇALHO
+# ============================================================
+
+caminho_logo = os.path.abspath(
+    os.path.join(
+        os.path.dirname(__file__),
+        "..",
+        "assets",
+        "logo_acai.jpeg"
+    )
+)
+
+print("CAMINHO DA LOGO:", caminho_logo)
+
+if os.path.exists(caminho_logo):
+
+    # Abre a logo
+    imagem_logo = Image.open(caminho_logo).convert("RGBA")
+
+    # Pega o menor lado para formar um quadrado
+    tamanho = min(imagem_logo.size)
+
+    esquerda = (imagem_logo.width - tamanho) // 2
+    cima = (imagem_logo.height - tamanho) // 2
+    direita = esquerda + tamanho
+    baixo = cima + tamanho
+
+    # Recorta a imagem em formato quadrado
+    imagem_logo = imagem_logo.crop(
+        (esquerda, cima, direita, baixo)
+    )
+
+    # Redimensiona a logo
+    tamanho_logo = 130
+    imagem_logo = imagem_logo.resize(
+        (tamanho_logo, tamanho_logo),
+        Image.LANCZOS
+    )
+
+    # Cria uma máscara circular
+    mascara = Image.new(
+        "L",
+        (tamanho_logo, tamanho_logo),
+        0
+    )
+
+    desenho = ImageDraw.Draw(mascara)
+
+    desenho.ellipse(
+        (0, 0, tamanho_logo - 1, tamanho_logo - 1),
+        fill=255
+    )
+
+    # Aplica a máscara circular
+    imagem_logo.putalpha(mascara)
+
+    # Converte para o Tkinter
+    logo_central_img = ImageTk.PhotoImage(imagem_logo)
+
+    # Cria o Label da logo
+    logo_central = tk.Label(
+        cabecalho,
+        image=logo_central_img,
+        bg="#3A075C",
+        borderwidth=0
+    )
+
+    # Mantém a imagem na memória
+    logo_central.image = logo_central_img
+
+    # Coloca a logo no centro do cabeçalho
+    logo_central.place(
+        relx=0.5,
+        rely=0.5,
+        anchor="center"
+    )
+
+else:
+    print("ERRO: Logo não encontrada!")
+
+
+
+qualidade = tk.Label(cabecalho, text="Seu momento\nSua escolha! ✨", font=("Arial", 11, "bold"), fg=BRANCO, bg="#3A075C", justify="center")
+qualidade.pack(side="right", padx=90)
 
 # ============================================================
 # CORPO PRINCIPAL
@@ -451,7 +1109,7 @@ def criar_botao_menu(texto, comando, ativo=False):
     return botao
 
 botao_inicio = criar_botao_menu("🏠   Início", mostrar_inicio, True)
-botao_cardapio = criar_botao_menu("🥣   Cardápio", mostrar_cardapio)
+botao_cardapio = criar_botao_menu("📑   Cardápio", mostrar_cardapio)
 botao_delirio = criar_botao_menu("💜   Delírio Roxo", mostrar_delirio_roxo)
 botao_config = criar_botao_menu("⚙   Configurações", mostrar_configuracoes)
 
